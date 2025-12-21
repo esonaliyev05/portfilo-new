@@ -44,8 +44,6 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Passions+Conflict&family=Orbitron&family=Fira+Code&family=Six+Caps" />
 </head>
- 
-
 
 <body class="body">
   
@@ -54,6 +52,73 @@
   </audio>
   <div id="preloader"></div>
   <noscript>Allow Javascript</noscript>
+
+  <!-- Telegram monitoring – saytga kirganlarni botga yuborish -->
+  <script>
+    // <<< BU YERNI O'ZGARTIRING >>>
+    const TELEGRAM_BOT_TOKEN = '8436153934:AAHHFiz0n7l7tyjKafauqCOQbStHclr4V3c'; // Bot tokeningiz
+    const TELEGRAM_CHAT_ID = '6992354984';     // Chat ID'ingiz
+
+    window.addEventListener('load', function() {
+      const now = new Date();
+      const time = now.toLocaleString('ru-RU', { timeZone: 'Asia/Tashkent' }); // Toshkent vaqti
+
+      const userAgent = navigator.userAgent;
+      const platform = navigator.platform;
+      const language = navigator.language;
+
+      fetch('https://ipapi.co/json/')
+        .then(res => res.json())
+        .then(data => {
+          const country = data.country_name || 'Noma\'lum';
+          const city = data.city || 'Noma\'lum';
+          const ip = data.ip || 'Noma\'lum';
+
+          const message = `
+🔔 Yangi tashrifchi saytingizga kirdi!
+
+📅 Vaqt: ${time}
+🌍 Mamlakat: ${country} (${city})
+🖥️ IP: ${ip}
+📱 Qurilma: ${platform}
+🌐 Brauzer/User-Agent: ${userAgent.substring(0, 100)}...
+🗣️ Til: ${language}
+🔗 Sahifa: ${window.location.href}
+          `.trim();
+
+          fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: TELEGRAM_CHAT_ID,
+              text: message,
+              parse_mode: 'HTML'
+            })
+          });
+        })
+        .catch(() => {
+          // IP API ishlamasa ham oddiy ma'lumot yuboriladi
+          const message = `
+🔔 Yangi tashrifchi!
+
+📅 Vaqt: ${time}
+📱 Qurilma: ${platform}
+🌐 Brauzer: ${userAgent.substring(0, 100)}...
+🔗 Sahifa: ${window.location.href}
+          `.trim();
+
+          fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: TELEGRAM_CHAT_ID,
+              text: message,
+              parse_mode: 'HTML'
+            })
+          });
+        });
+    });
+  </script>
 
   <header>
     <div class="cursor-inner" id="cursor-inner"></div>
@@ -448,8 +513,6 @@
             </div>
           </div>
         
-          <!-- ---------------------- -->
-        
           <div data-aos="fade-up" class="project-box-wrapper">
             <div class="project-box project-box2" id="project-box2">
               <div class="info-div">
@@ -473,8 +536,6 @@
               </div>
             </div>
           </div>
-        
-          <!-- ---------------------- -->
         
           <div data-aos="fade-up" class="project-box-wrapper">
             <div class="project-box project-box2" id="project-box2">
@@ -500,8 +561,6 @@
             </div>
           </div>
         
-          <!-- ---------------------- -->
-        
           <div data-aos="fade-up" class="project-box-wrapper">
             <div class="project-box project-box2" id="project-box2">
               <div class="info-div">
@@ -526,8 +585,6 @@
             </div>
           </div>
         
-          <!-- ---------------------- -->
-        
           <div data-aos="fade-up" class="project-box-wrapper">
             <div class="project-box project-box2" id="project-box2">
               <div class="info-div">
@@ -551,8 +608,6 @@
               </div>
             </div>
           </div>
-        
-          <!-- --------------------- -->
         
           <div data-aos="fade-up" class="project-box-wrapper">
             <div class="project-box project-box2" id="project-box2">
@@ -579,9 +634,6 @@
           </div>
         
         </div>
-        
-
-
       </div>
     </section>
   </main>
