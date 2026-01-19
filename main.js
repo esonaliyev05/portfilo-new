@@ -98,6 +98,8 @@ function scrolltoTopfunction() {
     },
     !1
   );
+
+  
 let Pupils = document.getElementsByClassName("footer-pupil"),
   pupilsArr = Array.from(Pupils),
   pupilStartPoint = -10,
